@@ -17,10 +17,10 @@ $(NAME)			:	$(OBJ) $(LIBFT) $(LIBMLX)
 				$(CC) -o $@ $(OBJ) $(LIBFT) $(LIBMLX)
 
 $(LIBFT)		: Makefile
-				make -C $(LIBFTDIR)
+				 make -C $(LIBFTDIR)
 
 $(LIBMLX)		: Makefile
-				make -C $(LIBMLXDIR) -s
+				make -C $(LIBMLXDIR)
 
 %.o				:	%.c Makefile $(HEADER)
 				$(CC) $(CFLAGS) -c $< -o $@
