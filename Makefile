@@ -13,8 +13,8 @@ OBJ				=	$(SRC:.c=.o)
 
 all				:	$(NAME)
 
-$(NAME)			:	$(OBJ) $(LIBFT) $(LIBMLX)
-				$(CC) -o $@ $(OBJ) $(LIBFT) $(LIBMLX)
+$(NAME)			:	$(OBJ) $(LIBFT) $(LIBMLX) $(HEADER)
+				$(CC) $(CFLAGS) -framework OpenGL -framework AppKit $(LIBFT) $(LIBMLX) $(OBJ) -o $(NAME)
 
 $(LIBFT)		: Makefile
 				 make -C $(LIBFTDIR)

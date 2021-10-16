@@ -10,4 +10,6 @@ int	main(void)
 
 	mlx = mlx_init();
 	img = mlx_xpm_file_to_image(mlx, relative_path, &img_width, &img_height);
+	while (1)
+		;
 }
