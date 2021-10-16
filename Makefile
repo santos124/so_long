@@ -2,29 +2,39 @@ NAME			=	so_long
 HEADER			=	SRC/so_long.h
 LIBFTDIR		=	SRC_0/libft
 LIBFT			=	$(LIBFTDIR)/libft.a
+LIBMLXDIR		=	SRC_0/minilibx_opengl_20191021
+LIBMLX			=	$(LIBMLXDIR)/libmlx.a
 CFLAGS			=	-Wall -Werror -Wextra
 CC				=	clang
+
 SRC				=	SRC/main.c
 
 OBJ				=	$(SRC:.c=.o)
 
-
 all				:	$(NAME)
 
-$(NAME)			:	$(OBJ) $(LIBFT)
-				$(CC) -o $@ $(OBJ) $(LIBFT)
-
-%.o				:	%.c Makefile $(HEADER)
-				$(CC) $(CFLAGS) -c $< -o $@
+$(NAME)			:	$(OBJ) $(LIBFT) $(LIBMLX)
+				$(CC) -o $@ $(OBJ) $(LIBFT) $(LIBMLX)
 
 $(LIBFT)		: Makefile
 				make -C $(LIBFTDIR)
 
+$(LIBMLX)		: Makefile
+				make -C $(LIBMLXDIR) -s
+
+%.o				:	%.c Makefile $(HEADER)
+				$(CC) $(CFLAGS) -c $< -o $@
+
+
+
 clean			:
 				rm -f $(OBJ)
 				make -C $(LIBFTDIR) clean
+				make -C $(LIBMLXDIR) clean
 
 fclean			:	clean
+				rm -f $(LIBMLX)
+				rm -f $(LIBFT)
 				rm -f $(NAME)
 
 re				:	fclean all
