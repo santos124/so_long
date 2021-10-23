@@ -1,6 +1,10 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
+# define SCREEN_H 600
+# define SCREEN_W 800
 
+//del before push 21
+# include	<stdio.h>
 # include	<stdlib.h>
 # include	<unistd.h>
 # include	"../SRC_0/libft/libft.h"
