@@ -5,6 +5,7 @@
 # include	<unistd.h>
 # include	"../SRC_0/libft/libft.h"
 # include	"../SRC_0/minilibx_opengl_20191021/mlx.h"
+#include <mlx.h>
 
 size_t	ft_strlen(const char *str);
 void	*ft_memset(void *str, int c, size_t len);
