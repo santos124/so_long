@@ -1,5 +1,17 @@
 #include "so_long.h"
 
+typedef struct	s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	
+
+typedef struct	s_vars {
+	void	*mlx;
+	void	*win;
+}				t_vars;
 
 int	ft_close(int keycode, t_vars *vars)
 {
@@ -26,7 +38,7 @@ void ff_init_window(t_vars *vars)
 {
 
 	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, SCREEN_W, SCREEN_H, "Hello world!");
+	vars->win = mlx_new_window(vars->mlx, 800, 600, "Hello world!");
 	// mlx_key_hook(vars->win, key_hook, vars);
 }
 
@@ -38,7 +50,7 @@ void f_draw(void	*mlx, void	*mlx_win, t_data	*img)
 
 	while (i < SCREEN_H)
 	{
-		j = 0;
+		j = 0;	
 		while (j < SCREEN_W)
 		{
 			pic[i][j] = 0xffffff - j * 1000;
@@ -95,19 +107,13 @@ void f_draw2(void	*mlx, void	*mlx_win, t_data	*img)
 int	main(void)
 {
 	t_vars	*vars;
-	void	*mlx;
+
 
 	vars = malloc(sizeof(t_vars));
-	// ff_init_window(vars);
-	// mlx_hook(vars->win, 2, 1L<<0, ft_close, vars);
-	// mlx_loop(vars->mlx);
-	// printf("New image\n");
-		
-
-	mlx = mlx_init();
-	mlx_loop_hook(mlx, render_next_frame, YourStruct);
-	mlx_loop(mlx);
-
+	ff_init_window(vars);
+	mlx_hook(vars->win, 2, 1L<<0, ft_close, vars);
+	mlx_loop(vars->mlx);
+	printf("New image\n");
 	free(vars);
 }
 
