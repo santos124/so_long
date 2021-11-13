@@ -10,3 +10,4 @@ int	main(void)
 	mlx_loop_hook(mlx, render_next_frame, YourStruct);
 	mlx_loop(mlx);
 }
+
