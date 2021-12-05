@@ -1,141 +1,101 @@
 #include "so_long.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	render_next_frame(t_game *game)
 {
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	(void)game;
+	mlx_put_image_to_window(game->mlx, game->win, game->pers->img, 0, 0);
+	return (0);
 }
 
-void f_draw(void	*mlx, void	*mlx_win, t_data	*img)
+int	key_hook(int keycode, t_game *game)
 {
-	int pic[SCREEN_H][SCREEN_W];
-	int i = 0;
-	int j = 0;
-
-	while (i < SCREEN_H)
-	{
-		j = 0;	
-		while (j < SCREEN_W)
-		{
-			pic[i][j] = 0xffffff - j * 1000;
-			j++;
-		}
-		i++;
-	}
-	i = 0;
-	j = 0;
-	while (i < SCREEN_H)
-	{
-		j = 0;
-		while (j < SCREEN_W)
-		{
-			my_mlx_pixel_put(img, j, i, pic[i][j]);
-			j++;
-		}
-		i++;
-	}
-	mlx_put_image_to_window(mlx, mlx_win, img->img, 0, 0);
-}
-
-
-void f_draw2(void	*mlx, void	*mlx_win, t_data	*img)
-{
-	int pic[SCREEN_H][SCREEN_W];
-	int i = 0;
-	int j = 0;
-
-	while (i < SCREEN_H)
-	{
-		j = 0;	
-		while (j < SCREEN_W)
-		{
-			pic[i][j] = 0xffffff +i * 10;
-			j++;
-		}
-		i++;
-	}
-	i = 0;
-	j = 0;
-	while (i < SCREEN_H)
-	{
-		j = 0;
-		while (j < SCREEN_W)
-		{
-			my_mlx_pixel_put(img, j, i, pic[i][j]);
-			j++;
-		}
-		i++;
-	}
-	mlx_put_image_to_window(mlx, mlx_win, img->img, 0, 0);
-}
-
-int ft_close(int code, t_vars *vars)
-{
-	(void)vars;
-	printf("HE, code=%d\n", code);
-	if (code == 53)
+	(void)game;
+	if (keycode == 53)
 		exit(0);
+	printf("    Hello from key_hook!                  %d\n", keycode);
 	return 0;
 }
-
-int	render_next_frame(t_data *img)
+void write_map(t_game *game)
 {
-	int pic[SCREEN_H][SCREEN_W];
-	int i = 0;
-	int j = 0;
 
-	while (i < SCREEN_H)
+	int i = -1;
+	while (game->map[++i])
 	{
-		j = 0;	
-		while (j < SCREEN_W)
-		{
-			pic[i][j] = 0xffffff +i * 10;
-			j++;
-		}
-		i++;
+		printf("map[%d]=%s\n", i, game->map[i]);
 	}
-	i = 0;
-	j = 0;
-	while (i < SCREEN_H)
+}
+
+void read_map(t_game *game, char *map_name)
+{
+	int fd;
+	int ret;
+	int cnt;
+	char *line;
+	char **oldMap = NULL;;
+	
+	int i = -1;
+
+	cnt = 0;
+	ret = 1;
+	game->map = (char**)ft_calloc(sizeof(char*), cnt + 1);
+	if (!game->map)
 	{
-		j = 0;
-		while (j < SCREEN_W)
-		{
-			my_mlx_pixel_put(img, j, i, pic[i][j]);
-			j++;
-		}
-		i++;
+		printf("CALLOC ERROR\n");
+		exit(0);
 	}
-	return 0;
+		
+	fd = open(map_name, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("map read error\n");
+		exit(0);
+	}
+	while (ret > 0)
+	{
+		ret = gnl(fd, &line);
+		if (ret == -1)
+			exit(0);
+		cnt++;
+		oldMap = game->map;
+		game->map = (char**)ft_calloc(sizeof(char*), cnt + 1);
+		if (!game->map)
+		{
+			printf("CALLOC ERROR\n");
+			exit(0);
+		}
+		while (oldMap[++i])
+		{
+			game->map[i] = oldMap[i];
+		}
+		game->map[i] = line;
+
+		i = -1;
+		free(oldMap);
+	}
 }
 
-int	ren_frame(t_data *img)
+void init_imgs(t_game *game)
 {
-	mlx_pixel_put(img, 100, 100, 0xffffff);
-	
-	return 0;
+	game->pers->img = mlx_xpm_file_to_image(game->mlx, "./pers.xpm", &game->pers->width, &game->pers->height);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
-	t_vars	*vars = malloc(sizeof(t_vars));
-	t_data	*img = malloc(sizeof(t_data));
+	t_game *game = malloc(sizeof(t_game));
+	if (ac != 2)
+	{
+		printf("Need map name(path2mapFile)\n");
+		exit(0);
+	}
+	read_map(game, av[1]);
+	write_map(game);
+	game->mlx = mlx_init();
+	game->win = mlx_new_window(game->mlx, SCREEN_W, SCREEN_H, BORDER_TXT);
+	init_imgs(game);
+	mlx_key_hook(game->win, key_hook, game);
+	mlx_loop_hook(game->mlx, render_next_frame, game);
+	mlx_loop(game->mlx);
 
-	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, SCREEN_W, SCREEN_H, "Hello world!");
-	img->img = mlx_new_image(vars->mlx, SCREEN_W, SCREEN_H);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length,
-								&img->endian);
-	
-	mlx_loop_hook(vars->mlx, ren_frame, img);
-	// f_draw2(vars->mlx, vars->win, &img);
-	mlx_key_hook(vars->win, ft_close, vars);
-	// mlx_hook(vars->win, 2, 1L<<0, ft_close, &vars);
-	// mlx_put_image_to_window(vars->mlx, vars->win, img->img, 0, 0);
-	
-	
-	mlx_loop(vars->mlx);
-	
+
+	return 0;
 }

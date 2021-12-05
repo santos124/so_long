@@ -15,13 +15,18 @@
 
 # include	<stdlib.h>
 # include	<unistd.h>
-
+# define BUFFER_SIZE 1
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }	t_list;
 
+char	*ft_strjoi(char *s1, char *s2, size_t s2len);
+int		ft_index(char *s, char c);
+void	buf_change(char *ptr);
+void	next_line(char *bf, char **line, int fd, int *ret);
+int		gnl(int fd, char **line);
 size_t	ft_strlen(const char *str);
 void	*ft_memset(void *str, int c, size_t len);
 void	ft_bzero(void *s, size_t n);

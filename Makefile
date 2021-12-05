@@ -4,10 +4,10 @@ LIBFTDIR		=	SRC_0/libft
 LIBFT			=	$(LIBFTDIR)/libft.a
 LIBMLXDIR		=	SRC_0/minilibx_opengl_20191021
 LIBMLX			=	$(LIBMLXDIR)/libmlx.a
-CFLAGS			=	-Wall -Werror -Wextra
+CFLAGS			=	-Wall -Werror -Wextra -g
 CC				=	clang
 
-SRC				=	SRC/main.c
+SRC				=	SRC/main03.c
 
 OBJ				=	$(SRC:.c=.o)
 
@@ -16,8 +16,8 @@ all				:	$(NAME)
 $(NAME)			:	$(OBJ) $(LIBFT) $(LIBMLX) $(HEADER)
 				$(CC) $(CFLAGS) -framework OpenGL -framework AppKit $(LIBFT) $(LIBMLX) $(OBJ) -o $(NAME)
 
-$(LIBFT)		: Makefile
-				 make -C $(LIBFTDIR)
+$(LIBFT)		: Makefile $(LIBFTDIR)/libft.h $(LIBFTDIR)/Makefile $(LIBFTDIR)
+				make -C $(LIBFTDIR)
 
 $(LIBMLX)		: Makefile
 				make -C $(LIBMLXDIR)
