@@ -7,7 +7,7 @@ LIBMLX			=	$(LIBMLXDIR)/libmlx.a
 CFLAGS			=	-Wall -Werror -Wextra -g
 CC				=	clang
 
-SRC				=	SRC/main03.c
+SRC				=	SRC/main.c SRC/moves.c SRC/errors.c SRC/read_map.c SRC/free.c SRC/render.c
 
 OBJ				=	$(SRC:.c=.o)
 
@@ -17,25 +17,25 @@ $(NAME)			:	$(OBJ) $(LIBFT) $(LIBMLX) $(HEADER)
 				$(CC) $(CFLAGS) -framework OpenGL -framework AppKit $(LIBFT) $(LIBMLX) $(OBJ) -o $(NAME)
 
 $(LIBFT)		: Makefile $(LIBFTDIR)/libft.h $(LIBFTDIR)/Makefile $(LIBFTDIR)
-				make -C $(LIBFTDIR)
+				@make -C $(LIBFTDIR)
 
 $(LIBMLX)		: Makefile
-				make -C $(LIBMLXDIR)
+				@make -C $(LIBMLXDIR)
 
 %.o				:	%.c Makefile $(HEADER)
-				$(CC) $(CFLAGS) -c $< -o $@
+				@$(CC) $(CFLAGS) -c $< -o $@
 
 
 
 clean			:
-				rm -f $(OBJ)
-				make -C $(LIBFTDIR) clean
-				make -C $(LIBMLXDIR) clean
+				@rm -f $(OBJ)
+				@make -C $(LIBFTDIR) clean
+				@make -C $(LIBMLXDIR) clean
 
 fclean			:	clean
-				rm -f $(LIBMLX)
-				rm -f $(LIBFT)
-				rm -f $(NAME)
+				@rm -f $(LIBMLX)
+				@rm -f $(LIBFT)
+				@rm -f $(NAME)
 
 re				:	fclean all
 

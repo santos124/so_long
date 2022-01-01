@@ -1,101 +1,216 @@
 #include "so_long.h"
 
-int	render_next_frame(t_game *game)
+char	**get_names_tank(t_game	*game)
 {
-	(void)game;
-	mlx_put_image_to_window(game->mlx, game->win, game->pers->img, 0, 0);
-	return (0);
+	int		i;
+	char	**tanks;
+
+	i = 0;
+	tanks = ft_calloc(sizeof(char*), 9);
+	if (!tanks)
+		game_close(3, game);
+	tanks[0] = ft_strdup("imgs/tank00.xpm");
+	if (!tanks[0])
+		game_close(3, game);
+	tanks[1] = ft_strdup("imgs/tank10.xpm");
+	if (!tanks[1])
+		game_close(3, game);
+	tanks[2] = ft_strdup("imgs/tank20.xpm");
+	if (!tanks[2])
+		game_close(3, game);
+	tanks[3] = ft_strdup("imgs/tank30.xpm");
+	if (!tanks[3])
+		game_close(3, game);
+	tanks[4] = ft_strdup("imgs/tank01.xpm");
+	if (!tanks[4])
+		game_close(3, game);
+	tanks[5] = ft_strdup("imgs/tank11.xpm");
+	if (!tanks[5])
+		game_close(3, game);
+	tanks[6] = ft_strdup("imgs/tank21.xpm");
+	if (!tanks[6])
+		game_close(3, game);
+	tanks[7] = ft_strdup("imgs/tank31.xpm");
+	if (!tanks[7])
+		game_close(3, game);
+	return (tanks);
 }
 
-int	key_hook(int keycode, t_game *game)
+static void get_tank(t_game *game)
 {
-	(void)game;
-	if (keycode == 53)
-		exit(0);
-	printf("    Hello from key_hook!                  %d\n", keycode);
-	return 0;
-}
-void write_map(t_game *game)
-{
-
-	int i = -1;
-	while (game->map[++i])
+	int i;
+	char **s;
+	s = get_names_tank(game);
+	i = 0;
+	while (i < 8)
 	{
-		printf("map[%d]=%s\n", i, game->map[i]);
+		game->tank[i] = (t_img*)ft_calloc(sizeof(t_img), 1);
+		if (!game->tank[i])
+			game_close(3, game);
+		game->tank[i]->img = mlx_xpm_file_to_image(game->mlx, s[i], &game->tank[i]->width , &game->tank[i]->height);
+		if (game->tank[i]->img == NULL)
+			game_close(4, game);
+		i++;
 	}
+	i = 0;
+	while (i < 8)
+		free(s[i++]);
+	free(s);
 }
 
-void read_map(t_game *game, char *map_name)
+char	**get_names_fuel(t_game	*game)
 {
-	int fd;
-	int ret;
-	int cnt;
-	char *line;
-	char **oldMap = NULL;;
+	int		i;
+	char	**fuels;
+
+	i = 0;
+	fuels = ft_calloc(sizeof(char*), 9);
+	if (!fuels)
+		game_close(3, game);
+	fuels[0] = ft_strdup("imgs/fuel1.xpm");
+	if (!fuels[0])
+		game_close(3, game);
+	fuels[1] = ft_strdup("imgs/fuel2.xpm");
+	if (!fuels[1])
+		game_close(3, game);
+	fuels[2] = ft_strdup("imgs/fuel3.xpm");
+	if (!fuels[2])
+		game_close(3, game);
+	fuels[3] = ft_strdup("imgs/fuel4.xpm");
+	if (!fuels[3])
+		game_close(3, game);
+	fuels[4] = ft_strdup("imgs/fuel5.xpm");
+	if (!fuels[4])
+		game_close(3, game);
+	fuels[5] = ft_strdup("imgs/fuel6.xpm");
+	if (!fuels[5])
+		game_close(3, game);
+	fuels[6] = ft_strdup("imgs/fuel7.xpm");
+	if (!fuels[6])
+		game_close(3, game);
+	fuels[7] = ft_strdup("imgs/fuel8.xpm");
+	if (!fuels[7])
+		game_close(3, game);
+	return (fuels);
+}
+
+static void get_fuel(t_game *game)
+{
+	int i;
+	char **s;
+	s = get_names_fuel(game);
+	i = 0;
+	while (i < 8)
+	{
+		game->fuel[i] = (t_img*)ft_calloc(sizeof(t_img), 1);
+		if (!game->fuel[i])
+			game_close(3, game);
+		game->fuel[i]->img = mlx_xpm_file_to_image(game->mlx, s[i], &game->fuel[i]->width , &game->fuel[i]->height);
+		if (game->fuel[i]->img == NULL)
+			game_close(4, game);
+		i++;
+	}
+	i = 0;
+	while (i < 8)
+		free(s[i++]);
+	free(s);	
 	
-	int i = -1;
-
-	cnt = 0;
-	ret = 1;
-	game->map = (char**)ft_calloc(sizeof(char*), cnt + 1);
-	if (!game->map)
-	{
-		printf("CALLOC ERROR\n");
-		exit(0);
-	}
-		
-	fd = open(map_name, O_RDONLY);
-	if (fd == -1)
-	{
-		printf("map read error\n");
-		exit(0);
-	}
-	while (ret > 0)
-	{
-		ret = gnl(fd, &line);
-		if (ret == -1)
-			exit(0);
-		cnt++;
-		oldMap = game->map;
-		game->map = (char**)ft_calloc(sizeof(char*), cnt + 1);
-		if (!game->map)
-		{
-			printf("CALLOC ERROR\n");
-			exit(0);
-		}
-		while (oldMap[++i])
-		{
-			game->map[i] = oldMap[i];
-		}
-		game->map[i] = line;
-
-		i = -1;
-		free(oldMap);
-	}
+	
+	printf("|TEST|\n");
 }
 
 void init_imgs(t_game *game)
 {
-	game->pers->img = mlx_xpm_file_to_image(game->mlx, "./pers.xpm", &game->pers->width, &game->pers->height);
+	
+	get_tank(game);
+	
+	get_fuel(game);
+	game->space->img = mlx_xpm_file_to_image(game->mlx, "imgs/grass.xpm", &game->space->width, &game->space->height);
+	if (game->space->img == NULL)
+		game_close(4, game);
+	game->wall->img = mlx_xpm_file_to_image(game->mlx, "imgs/wall.xpm", &game->wall->width, &game->wall->height);
+	if (game->wall->img == NULL)
+		game_close(4, game);
+	game->mine->img = mlx_xpm_file_to_image(game->mlx, "imgs/mine.xpm", &game->mine->width, &game->mine->height);
+	if (game->mine->img == NULL)
+		game_close(4, game);
+	game->exit->img = mlx_xpm_file_to_image(game->mlx, "imgs/exit.xpm", &game->exit->width, &game->exit->height);
+	if (game->exit->img == NULL)
+		game_close(4, game);
 }
+
+
+
+void init_game(t_game *game)
+{
+	game->mlx = NULL;
+	game->win = NULL;
+	game->space = NULL;
+	game->wall = NULL;
+	game->tank = NULL;
+	game->fuel = NULL;
+	game->exit = NULL;
+	game->mine = NULL;
+	game->map_name = NULL;
+	game->map = NULL;
+
+	game->moveCnt = 0;
+	game->foodCnt = 0;
+	game->exitCnt = 0;
+	game->persCnt = 0;
+	game->didMove = 0;
+	game->eatFood = 0;
+	game->h = 0;
+	game->w = 0;
+	game->needClear = 0;
+	game->pX = 0;
+	game->pY = 0;
+	game->i = 1;
+	game->j = 0;
+	game->pD = 0;
+}
+
+t_game *init_mem(int ac, char **av)
+{
+	t_game *game;
+	
+	if (ac != 2)
+	{
+		
+		game_close(6, NULL);
+		exit(0);
+	}
+	game = ft_calloc(sizeof(t_game), 1);
+	init_game(game);
+	game->space = ft_calloc(sizeof(t_img), 1);
+	game->wall = ft_calloc(sizeof(t_img), 1);
+	game->tank = ft_calloc(sizeof(t_img*), 9);
+	game->fuel = ft_calloc(sizeof(t_img*), 12);
+	game->exit = ft_calloc(sizeof(t_img), 1);
+	game->mine = ft_calloc(sizeof(t_img), 1);
+	game->map_name = ft_strdup(av[1]);
+	return (game);
+}
+
 
 int	main(int ac, char **av)
 {
-	t_game *game = malloc(sizeof(t_game));
-	if (ac != 2)
-	{
-		printf("Need map name(path2mapFile)\n");
-		exit(0);
-	}
+	t_game *game;
+
+	
+	game = init_mem(ac, av);
+	
 	read_map(game, av[1]);
-	write_map(game);
+	
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, SCREEN_W, SCREEN_H, BORDER_TXT);
+	game->win = mlx_new_window(game->mlx, game->w * 100, game->h * 100, "so_long");
+	printf("|TEST|\n");
 	init_imgs(game);
-	mlx_key_hook(game->win, key_hook, game);
-	mlx_loop_hook(game->mlx, render_next_frame, game);
+	mlx_hook(game->win, 2, 1L<<0, key, game);
+	mlx_hook(game->win, 17, 1L<<2, button, game);
+
+
+	mlx_loop_hook(game->mlx, render, game);
 	mlx_loop(game->mlx);
-
-
 	return 0;
 }
