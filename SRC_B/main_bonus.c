@@ -1,4 +1,4 @@
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 char	**get_names_tank(t_game	*game)
 {
@@ -8,31 +8,31 @@ char	**get_names_tank(t_game	*game)
 	i = 0;
 	tanks = ft_calloc(sizeof(char*), 9);
 	if (!tanks)
-		game_close(3, game);
+		game_close(1, game);
 	tanks[0] = ft_strdup("imgs/tank00.xpm");
 	if (!tanks[0])
-		game_close(3, game);
+		game_close(1, game);
 	tanks[1] = ft_strdup("imgs/tank10.xpm");
 	if (!tanks[1])
-		game_close(3, game);
+		game_close(1, game);
 	tanks[2] = ft_strdup("imgs/tank20.xpm");
 	if (!tanks[2])
-		game_close(3, game);
+		game_close(1, game);
 	tanks[3] = ft_strdup("imgs/tank30.xpm");
 	if (!tanks[3])
-		game_close(3, game);
+		game_close(1, game);
 	tanks[4] = ft_strdup("imgs/tank01.xpm");
 	if (!tanks[4])
-		game_close(3, game);
+		game_close(1, game);
 	tanks[5] = ft_strdup("imgs/tank11.xpm");
 	if (!tanks[5])
-		game_close(3, game);
+		game_close(1, game);
 	tanks[6] = ft_strdup("imgs/tank21.xpm");
 	if (!tanks[6])
-		game_close(3, game);
+		game_close(1, game);
 	tanks[7] = ft_strdup("imgs/tank31.xpm");
 	if (!tanks[7])
-		game_close(3, game);
+		game_close(1, game);
 	return (tanks);
 }
 

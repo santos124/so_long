@@ -14,7 +14,6 @@ static void draw_rectange(t_game *game, int x, int y, char block)
 		mlx_put_image_to_window(game->mlx, game->win, game->food->img, dx, dy);
 	else if (block == 'E')
 		mlx_put_image_to_window(game->mlx, game->win, game->exit->img, dx, dy);
-	
 }
 
 

@@ -2,8 +2,11 @@
 
 static void liberty(void **pointer)
 {
-	free(*pointer);
-	*pointer = NULL;
+	if (!(*pointer))
+	{
+		free(*pointer);
+		*pointer = NULL;
+	}
 }
 
 static void	clear_img(t_img **pic, t_game *game)

@@ -1,4 +1,4 @@
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void pers_find(t_game *game)
 {
@@ -61,7 +61,6 @@ void	valid_map(t_game *game)
 		}
 		y++;
 	}
-	
 	if (game->exitCnt == 0 || game->foodCnt == 0 || game->persCnt != 1)
 		game_close(4, game);
 	x = 0;
@@ -120,10 +119,8 @@ void read_map(t_game *game, char *map_name)
 	char **oldMap = NULL;
 	
 	int i = -1;
-
 	cnt = 0;
 	ret = 1;
-	
 	fd = open(map_name, O_RDONLY);
 	if (fd == -1)
 		game_close(1, game);

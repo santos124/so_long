@@ -5,7 +5,8 @@
 # include	<unistd.h>
 # include	<fcntl.h>
 # include	"../SRC_0/libft/libft.h"
-# include	"../SRC_0/minilibx_opengl_20191021/mlx.h"
+# include	"../SRC_0/mlx/mlx.h"
+// # include	<mlx.h>
 
 typedef struct	s_img {
 	void	*img;
@@ -23,16 +24,16 @@ typedef struct	s_game {
 	t_img	*pers;
 	char	*map_name;
 	char	**map;
-	int		h;
-	int		w;
 	int		moveCnt;
 	int		foodCnt;
 	int		exitCnt;
 	int		persCnt;
-	int		pX;
-	int		pY;
 	int		didMove;
 	int		eatFood;
+	int		pX;
+	int		pY;
+	int		h;
+	int		w;
 	int		needClear;	
 }				t_game;
 

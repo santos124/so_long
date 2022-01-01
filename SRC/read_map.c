@@ -22,17 +22,6 @@ void pers_find(t_game *game)
 	}
 }
 
-void	food_check(t_game	*game)
-{
-	int pY;
-	int	pX;
-
-	pY = game->pY;
-	pX = game->pX;
-	if (game->foodCnt == 0 && game->map[pY][pX] == 'E')
-		exit(0);
-}
-
 void	valid_map(t_game *game)
 {
 	int x;
@@ -58,12 +47,8 @@ void	valid_map(t_game *game)
 		}
 		y++;
 	}
-	
 	if (game->exitCnt == 0 || game->foodCnt == 0 || game->persCnt != 1)
-	{
-		
 		game_close(4, game);
-	}
 	x = 0;
 	while (x < game->w)
 	{
@@ -71,7 +56,6 @@ void	valid_map(t_game *game)
 			game_close(4, game);
 		x++;
 	}
-	
 	y = 0;
 	while (y < game->h)
 	{
@@ -79,7 +63,6 @@ void	valid_map(t_game *game)
 			game_close(4, game);
 		y++;
 	}
-	
 }
 
 void read_map(t_game *game, char *map_name)
@@ -91,54 +74,34 @@ void read_map(t_game *game, char *map_name)
 	char **oldMap = NULL;;
 	
 	int i = -1;
-
 	cnt = 0;
 	ret = 1;
-	
-	
 	fd = open(map_name, O_RDONLY);
 	if (fd == -1)
-	{
 		game_close(1, game);
-	}
-	
 	game->map = (char**)ft_calloc(sizeof(char*), cnt + 1);
 	if (!game->map)
-	{
-		ft_putendl_fd("Malloc error", 2);
-		exit(0);
-	}
-	
+		game_close(3, game);	
 	while (ret > 0)
 	{
 		ret = gnl(fd, &line);
 		if (ret == -1)
-			ft_putendl_fd("Read map error", 2);
+			game_close(2, game);
 		cnt++;
 		oldMap = game->map;
 		game->map = (char**)ft_calloc(sizeof(char*), cnt + 1);
 		if (!game->map)
-		{
-			ft_putendl_fd("CALLOC ERROR", 2);
-			exit(0);
-		}
+			game_close(3, game);
 		while (oldMap[++i])
-		{
 			game->map[i] = oldMap[i];
-		}
 		game->map[i] = line;
 		game->map[i + 1] = NULL;
 		i = -1;
 		free(oldMap);
 	}
-	
 	close(fd);
 	game->h = cnt;
 	game->w = ft_strlen(game->map[0]);
-	
-	i = -1;
-	
 	valid_map(game);
-	
 	pers_find(game);
 }

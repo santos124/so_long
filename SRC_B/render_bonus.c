@@ -1,4 +1,4 @@
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	food(t_game	*game, int	px, int	py)
 {
@@ -23,7 +23,6 @@ void	enemy(t_game	*game)
 				else
 					game->mines[i]->y -= 1;
 			}
-			
 		}
 		else
 		{
@@ -39,8 +38,6 @@ void	enemy(t_game	*game)
 		if (game->pX == game->mines[i]->x && game->pY == game->mines[i]->y)
 			game_close(7, game);
 	}
-	
-	
 }
 
 void draw_rectange(t_game *game, int x, int y, char block)
@@ -61,20 +58,13 @@ void draw_rectange(t_game *game, int x, int y, char block)
 
 void	pers(t_game *game)
 {
-
-
 	if (game->i > 25)
-	{
 		mlx_put_image_to_window(game->mlx, game->win, game->tank[0 + game->pD]->img, game->pX * 100, game->pY * 100);
-	}
 	else
-	{
 		mlx_put_image_to_window(game->mlx, game->win, game->tank[4 + game->pD]->img, game->pX * 100, game->pY * 100);
-	}
 	game->i++;
 	if (game->i > 50)
 		game->i = 0;
-	
 }
 
 int	render(t_game *game)
@@ -82,7 +72,7 @@ int	render(t_game *game)
 	int		y;
 	int		x;
 	char	*str;
-	
+
 	y = 0;
 	while (y < game->h)
 	{

@@ -1,4 +1,4 @@
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void game_close(int err, t_game *game)
 {
@@ -9,7 +9,6 @@ void game_close(int err, t_game *game)
 	}
 	
 	liberator(game);
-	
 	if (err == 1)
 	{
 		ft_putendl_fd("Error\nOpen error", 2);

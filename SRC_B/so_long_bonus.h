@@ -1,42 +1,17 @@
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 # include	<stdio.h>
 # include	<stdlib.h>
 # include	<unistd.h>
 # include	<fcntl.h>
 # include	"../SRC_0/libft/libft.h"
-# include	"../SRC_0/minilibx_opengl_20191021/mlx.h"
+# include	"../SRC_0/mlx/mlx.h"
 
 typedef struct	s_img {
 	void	*img;
 	int		width;
 	int		height;
 }				t_img;
-
-// typedef struct	s_tank {
-// 	t_img	*img00;
-// 	t_img	*img10;
-// 	t_img	*img20;
-// 	t_img	*img30;
-// 	t_img	*img01;
-// 	t_img	*img11;
-// 	t_img	*img21;
-// 	t_img	*img31;
-// }				t_tank;
-
-// typedef struct	s_fuel {
-// 	t_img	**img1;
-// 	t_img	*img2;
-// 	t_img	*img3;
-// 	t_img	*img4;
-// 	t_img	*img5;
-// 	t_img	*img6;
-// 	t_img	*img7;
-// 	t_img	*img8;
-// 	t_img	*img9;
-// 	t_img	*img10;
-// 	t_img	*img11;
-// }				t_fuel;
 
 typedef struct s_enemy {
 	int		x;

@@ -1,4 +1,4 @@
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int key(int keycode, t_game *game)
 {
@@ -17,9 +17,7 @@ int key(int keycode, t_game *game)
 	else
 		return(0);
 	if (game->foodCnt == 0 && game->map[game->pY][game->pX] == 'E')
-	{
 		game_close(0, game);
-	}
 	return (0);
 }
 

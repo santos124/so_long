@@ -2,9 +2,6 @@
 
 int key(int keycode, t_game *game)
 {
-	int pY;
-	int	pX;
-
 	game->moveCnt++;
 	game->eatFood = 0;
 	if (keycode == 53)
@@ -21,9 +18,7 @@ int key(int keycode, t_game *game)
 		return(0);
 	if (game->didMove)
 		printf("MOVES=%d\n", game->moveCnt);
-	pY = game->pY;
-	pX = game->pX;
-	if (game->foodCnt == 0 && game->map[pY][pX] == 'E')
+	if (game->foodCnt == 0 && game->map[game->pY][game->pX] == 'E')
 		game_close(0, game);
 	return (0);
 }

@@ -33,7 +33,8 @@ void game_close(int err, t_game *game)
 		ft_putendl_fd("Game interupted of ESC", 2);
 		exit(5);
 	}
-	ft_putendl_fd("Game over", 2);
+	if (err == 0)
+		ft_putendl_fd("Game done", 2);
 	exit(0);
 }
 
