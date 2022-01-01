@@ -2,9 +2,6 @@
 
 int key(int keycode, t_game *game)
 {
-	int pY;
-	int	pX;
-
 	game->moveCnt++;
 	game->eatFood = 0;
 	if (keycode == 53)
@@ -19,17 +16,16 @@ int key(int keycode, t_game *game)
 		dir_up(game);
 	else
 		return(0);
-	if (game->didMove)
-		printf("MOVES=%d\n", game->moveCnt);
-	pY = game->pY;
-	pX = game->pX;
-	if (game->foodCnt == 0 && game->map[pY][pX] == 'E')
+	if (game->foodCnt == 0 && game->map[game->pY][game->pX] == 'E')
+	{
 		game_close(0, game);
+	}
 	return (0);
 }
 
 void dir_left(t_game *game)
 {
+	game->pD = 1;
 	if (game->pX > 0)
 	{
 		if (game->map[game->pY][game->pX - 1] == 'C')
@@ -53,6 +49,7 @@ void dir_left(t_game *game)
 
 void dir_right(t_game *game)
 {
+	game->pD = 3;
 	if (game->pX < game->w - 1)
 	{
 		if (game->map[game->pY][game->pX + 1] == 'C')
@@ -76,6 +73,7 @@ void dir_right(t_game *game)
 
 void dir_down(t_game *game)
 {
+	game->pD = 2;
 	if (game->pY < game->h - 1)
 	{
 		if (game->map[game->pY + 1][game->pX] == 'C')
@@ -99,6 +97,7 @@ void dir_down(t_game *game)
 
 void dir_up(t_game *game)
 {
+	game->pD = 0;
 	if (game->pY > 0)
 	{
 		if (game->map[game->pY - 1][game->pX] == 'C')

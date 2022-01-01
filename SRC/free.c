@@ -31,8 +31,11 @@ void	liberator(t_game	*game)
 			liberty((void**)&game->map[y]);
 	}
 	clear_img(&game->space, game);
+	ft_putendl_fd("|XYU|", 2);
 	clear_img(&game->wall, game);
+	clear_img(&game->food, game);
 	clear_img(&game->exit, game);
+	clear_img(&game->pers, game);
 	if (game->mlx && game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	

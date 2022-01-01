@@ -13,40 +13,14 @@ typedef struct	s_img {
 	int		height;
 }				t_img;
 
-// typedef struct	s_tank {
-// 	t_img	*img00;
-// 	t_img	*img10;
-// 	t_img	*img20;
-// 	t_img	*img30;
-// 	t_img	*img01;
-// 	t_img	*img11;
-// 	t_img	*img21;
-// 	t_img	*img31;
-// }				t_tank;
-
-// typedef struct	s_fuel {
-// 	t_img	**img1;
-// 	t_img	*img2;
-// 	t_img	*img3;
-// 	t_img	*img4;
-// 	t_img	*img5;
-// 	t_img	*img6;
-// 	t_img	*img7;
-// 	t_img	*img8;
-// 	t_img	*img9;
-// 	t_img	*img10;
-// 	t_img	*img11;
-// }				t_fuel;
-
 typedef struct	s_game {
 	void	*mlx;
 	void	*win;
 	t_img	*space;
 	t_img	*wall;
+	t_img	*food;
 	t_img	*exit;
-	t_img	**tank;
-	t_img	**fuel;
-	t_img	*mine;
+	t_img	*pers;
 	char	*map_name;
 	char	**map;
 	int		h;
@@ -57,12 +31,9 @@ typedef struct	s_game {
 	int		persCnt;
 	int		pX;
 	int		pY;
-	int		pD;
 	int		didMove;
 	int		eatFood;
 	int		needClear;	
-	int		i;
-	int		j;
 }				t_game;
 
 void	game_close(int err, t_game *game);

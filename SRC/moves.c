@@ -30,7 +30,6 @@ int key(int keycode, t_game *game)
 
 void dir_left(t_game *game)
 {
-	game->pD = 1;
 	if (game->pX > 0)
 	{
 		if (game->map[game->pY][game->pX - 1] == 'C')
@@ -54,7 +53,6 @@ void dir_left(t_game *game)
 
 void dir_right(t_game *game)
 {
-	game->pD = 3;
 	if (game->pX < game->w - 1)
 	{
 		if (game->map[game->pY][game->pX + 1] == 'C')
@@ -78,7 +76,6 @@ void dir_right(t_game *game)
 
 void dir_down(t_game *game)
 {
-	game->pD = 2;
 	if (game->pY < game->h - 1)
 	{
 		if (game->map[game->pY + 1][game->pX] == 'C')
@@ -102,7 +99,6 @@ void dir_down(t_game *game)
 
 void dir_up(t_game *game)
 {
-	game->pD = 0;
 	if (game->pY > 0)
 	{
 		if (game->map[game->pY - 1][game->pX] == 'C')

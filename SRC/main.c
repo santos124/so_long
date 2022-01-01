@@ -1,140 +1,20 @@
 #include "so_long.h"
 
-char	**get_names_tank(t_game	*game)
-{
-	int		i;
-	char	**tanks;
-
-	i = 0;
-	tanks = ft_calloc(sizeof(char*), 9);
-	if (!tanks)
-		game_close(3, game);
-	tanks[0] = ft_strdup("imgs/tank00.xpm");
-	if (!tanks[0])
-		game_close(3, game);
-	tanks[1] = ft_strdup("imgs/tank10.xpm");
-	if (!tanks[1])
-		game_close(3, game);
-	tanks[2] = ft_strdup("imgs/tank20.xpm");
-	if (!tanks[2])
-		game_close(3, game);
-	tanks[3] = ft_strdup("imgs/tank30.xpm");
-	if (!tanks[3])
-		game_close(3, game);
-	tanks[4] = ft_strdup("imgs/tank01.xpm");
-	if (!tanks[4])
-		game_close(3, game);
-	tanks[5] = ft_strdup("imgs/tank11.xpm");
-	if (!tanks[5])
-		game_close(3, game);
-	tanks[6] = ft_strdup("imgs/tank21.xpm");
-	if (!tanks[6])
-		game_close(3, game);
-	tanks[7] = ft_strdup("imgs/tank31.xpm");
-	if (!tanks[7])
-		game_close(3, game);
-	return (tanks);
-}
-
-static void get_tank(t_game *game)
-{
-	int i;
-	char **s;
-	s = get_names_tank(game);
-	i = 0;
-	while (i < 8)
-	{
-		game->tank[i] = (t_img*)ft_calloc(sizeof(t_img), 1);
-		if (!game->tank[i])
-			game_close(3, game);
-		game->tank[i]->img = mlx_xpm_file_to_image(game->mlx, s[i], &game->tank[i]->width , &game->tank[i]->height);
-		if (game->tank[i]->img == NULL)
-			game_close(4, game);
-		i++;
-	}
-	i = 0;
-	while (i < 8)
-		free(s[i++]);
-	free(s);
-}
-
-char	**get_names_fuel(t_game	*game)
-{
-	int		i;
-	char	**fuels;
-
-	i = 0;
-	fuels = ft_calloc(sizeof(char*), 9);
-	if (!fuels)
-		game_close(3, game);
-	fuels[0] = ft_strdup("imgs/fuel1.xpm");
-	if (!fuels[0])
-		game_close(3, game);
-	fuels[1] = ft_strdup("imgs/fuel2.xpm");
-	if (!fuels[1])
-		game_close(3, game);
-	fuels[2] = ft_strdup("imgs/fuel3.xpm");
-	if (!fuels[2])
-		game_close(3, game);
-	fuels[3] = ft_strdup("imgs/fuel4.xpm");
-	if (!fuels[3])
-		game_close(3, game);
-	fuels[4] = ft_strdup("imgs/fuel5.xpm");
-	if (!fuels[4])
-		game_close(3, game);
-	fuels[5] = ft_strdup("imgs/fuel6.xpm");
-	if (!fuels[5])
-		game_close(3, game);
-	fuels[6] = ft_strdup("imgs/fuel7.xpm");
-	if (!fuels[6])
-		game_close(3, game);
-	fuels[7] = ft_strdup("imgs/fuel8.xpm");
-	if (!fuels[7])
-		game_close(3, game);
-	return (fuels);
-}
-
-static void get_fuel(t_game *game)
-{
-	int i;
-	char **s;
-	s = get_names_fuel(game);
-	i = 0;
-	while (i < 8)
-	{
-		game->fuel[i] = (t_img*)ft_calloc(sizeof(t_img), 1);
-		if (!game->fuel[i])
-			game_close(3, game);
-		game->fuel[i]->img = mlx_xpm_file_to_image(game->mlx, s[i], &game->fuel[i]->width , &game->fuel[i]->height);
-		if (game->fuel[i]->img == NULL)
-			game_close(4, game);
-		i++;
-	}
-	i = 0;
-	while (i < 8)
-		free(s[i++]);
-	free(s);	
-	
-	
-	printf("|TEST|\n");
-}
-
 void init_imgs(t_game *game)
 {
-	
-	get_tank(game);
-	
-	get_fuel(game);
-	game->space->img = mlx_xpm_file_to_image(game->mlx, "imgs/grass.xpm", &game->space->width, &game->space->height);
+	game->pers->img = mlx_xpm_file_to_image(game->mlx, "./pers.xpm", &game->pers->width, &game->pers->height);
+	if (game->pers->img == NULL)
+		game_close(4, game);
+	game->space->img = mlx_xpm_file_to_image(game->mlx, "./space.xpm", &game->pers->width, &game->pers->height);
 	if (game->space->img == NULL)
 		game_close(4, game);
-	game->wall->img = mlx_xpm_file_to_image(game->mlx, "imgs/wall.xpm", &game->wall->width, &game->wall->height);
+	game->wall->img = mlx_xpm_file_to_image(game->mlx, "./wall.xpm", &game->pers->width, &game->pers->height);
 	if (game->wall->img == NULL)
 		game_close(4, game);
-	game->mine->img = mlx_xpm_file_to_image(game->mlx, "imgs/mine.xpm", &game->mine->width, &game->mine->height);
-	if (game->mine->img == NULL)
+	game->food->img = mlx_xpm_file_to_image(game->mlx, "./collect.xpm", &game->pers->width, &game->pers->height);
+	if (game->wall->img == NULL)
 		game_close(4, game);
-	game->exit->img = mlx_xpm_file_to_image(game->mlx, "imgs/exit.xpm", &game->exit->width, &game->exit->height);
+	game->exit->img = mlx_xpm_file_to_image(game->mlx, "./exit.xpm", &game->pers->width, &game->pers->height);
 	if (game->exit->img == NULL)
 		game_close(4, game);
 }
@@ -147,13 +27,11 @@ void init_game(t_game *game)
 	game->win = NULL;
 	game->space = NULL;
 	game->wall = NULL;
-	game->tank = NULL;
-	game->fuel = NULL;
+	game->food = NULL;
 	game->exit = NULL;
-	game->mine = NULL;
+	game->pers = NULL;
 	game->map_name = NULL;
 	game->map = NULL;
-
 	game->moveCnt = 0;
 	game->foodCnt = 0;
 	game->exitCnt = 0;
@@ -165,29 +43,21 @@ void init_game(t_game *game)
 	game->needClear = 0;
 	game->pX = 0;
 	game->pY = 0;
-	game->i = 1;
-	game->j = 0;
-	game->pD = 0;
 }
 
-t_game *init_mem(int ac, char **av)
+t_game *init_mem(char **av)
 {
 	t_game *game;
 	
-	if (ac != 2)
-	{
-		
-		game_close(6, NULL);
-		exit(0);
-	}
-	game = ft_calloc(sizeof(t_game), 1);
+	game = malloc(sizeof(t_game));
+	if (game == NULL)
+		game_close(3, game);
 	init_game(game);
-	game->space = ft_calloc(sizeof(t_img), 1);
-	game->wall = ft_calloc(sizeof(t_img), 1);
-	game->tank = ft_calloc(sizeof(t_img*), 9);
-	game->fuel = ft_calloc(sizeof(t_img*), 12);
-	game->exit = ft_calloc(sizeof(t_img), 1);
-	game->mine = ft_calloc(sizeof(t_img), 1);
+	game->space = malloc(sizeof(t_img));
+	game->wall = malloc(sizeof(t_img));
+	game->food = malloc(sizeof(t_img));
+	game->exit = malloc(sizeof(t_img));
+	game->pers = malloc(sizeof(t_img));
 	game->map_name = ft_strdup(av[1]);
 	return (game);
 }
@@ -197,19 +67,15 @@ int	main(int ac, char **av)
 {
 	t_game *game;
 
-	
-	game = init_mem(ac, av);
-	
+	if (ac != 2)
+		game_close(6, NULL);	
+	game = init_mem(av);
 	read_map(game, av[1]);
-	
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, game->w * 100, game->h * 100, "so_long");
-	printf("|TEST|\n");
 	init_imgs(game);
 	mlx_hook(game->win, 2, 1L<<0, key, game);
 	mlx_hook(game->win, 17, 1L<<2, button, game);
-
-
 	mlx_loop_hook(game->mlx, render, game);
 	mlx_loop(game->mlx);
 	return 0;
