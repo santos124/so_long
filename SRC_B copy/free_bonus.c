@@ -12,7 +12,7 @@
 
 #include "so_long_bonus.h"
 
-static void	liberty(void **pointer)
+static void liberty(void **pointer)
 {
 	if (!(*pointer))
 	{
@@ -30,14 +30,13 @@ static void	clear_img(t_img **pic, t_game *game)
 		free(*pic);
 		*pic = NULL;
 	}
+	
 }
 
-static void	clear_imgs(t_img ***pic, t_game *game)
+static void clear_imgs(t_img ***pic, t_game *game)
 {
-	int	i;
-
-	i = 0;
-	while ((*pic)[i])
+	int i = 0;
+	while((*pic)[i])
 	{
 		clear_img(&(*pic)[i], game);
 		i++;
@@ -46,11 +45,9 @@ static void	clear_imgs(t_img ***pic, t_game *game)
 	*pic = NULL;
 }
 
-static void	clear_enemies(t_game	*game)
+static void clear_enemies(t_game	*game)
 {
-	int	i;
-
-	i = 0;
+	int i = 0;
 	if (game->mines)
 	{
 		while (game->mines[i])
@@ -63,14 +60,18 @@ static void	clear_enemies(t_game	*game)
 
 void	liberator(t_game	*game)
 {
-	int	y;
-
+	int y;
+	
 	y = -1;
+	
 	if (game->map_name)
-		liberty((void **)&game->map_name);
+		liberty((void**)&game->map_name);
+	
 	while (game->map[++y])
+	{
 		if (game->map[y])
-			liberty((void **)&game->map[y]);
+			liberty((void**)&game->map[y]);
+	}
 	clear_imgs(&game->tank, game);
 	clear_imgs(&game->fuel, game);
 	clear_img(&game->space, game);
@@ -81,6 +82,6 @@ void	liberator(t_game	*game)
 	if (game->mlx != NULL && game->win != NULL)
 	{
 		mlx_clear_window(game->mlx, game->win);
-		mlx_destroy_window(game->mlx, game->win);
+		mlx_destroy_window(game->mlx, game->win);		
 	}
 }

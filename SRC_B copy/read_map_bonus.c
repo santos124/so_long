@@ -12,7 +12,7 @@
 
 #include "so_long_bonus.h"
 
-void	pers_find(t_game *game)
+void pers_find(t_game *game)
 {
 	int	x;
 	int	y;
@@ -25,8 +25,8 @@ void	pers_find(t_game *game)
 		{
 			if (game->map[y][x] == 'P')
 			{
-				game->p_y = y;
-				game->p_x = x;
+				game->pY = y;
+				game->pX = x;
 			}
 			x++;
 		}
@@ -36,20 +36,20 @@ void	pers_find(t_game *game)
 
 void	food_check(t_game	*game)
 {
-	int p_y;
-	int	p_x;
+	int pY;
+	int	pX;
 
-	p_y = game->p_y;
-	p_x = game->p_x;
-	if (game->food_cnt == 0 && game->map[p_y][p_x] == 'E')
+	pY = game->pY;
+	pX = game->pX;
+	if (game->foodCnt == 0 && game->map[pY][pX] == 'E')
 		exit(0);
 }
 
 void	valid_map(t_game *game)
 {
-	int	x;
-	int	y;
-
+	int x;
+	int y;
+	
 	y = 0;
 	while (y < game->h)
 	{
@@ -57,23 +57,23 @@ void	valid_map(t_game *game)
 		while (x < game->w)
 		{
 			if (ft_strlen(game->map[y]) != (size_t)game->w || (game->map[y][x]
-				!= '1' && game->map[y][x] != '0' && game->map[y][x] != 'C' &&
+			!= '1' && game->map[y][x] != '0'&& game->map[y][x] != 'C' &&
 			game->map[y][x] != 'P' && game->map[y][x] != 'E' &&
 			game->map[y][x] != 'X'))
 				game_close(4, game);
 			if (game->map[y][x] == 'P')
-				game->pers_cnt++;
+				game->persCnt++;
 			if (game->map[y][x] == 'C')
-				game->food_cnt++;
+				game->foodCnt++;
 			if (game->map[y][x] == 'E')
 				game->exitCnt++;
 			if (game->map[y][x] == 'X')
-				game->enemy_cnt++;
+				game->enemyCnt++;
 			x++;
 		}
 		y++;
 	}
-	if (game->exitCnt == 0 || game->food_cnt == 0 || game->pers_cnt != 1)
+	if (game->exitCnt == 0 || game->foodCnt == 0 || game->persCnt != 1)
 		game_close(4, game);
 	x = 0;
 	while (x < game->w)
@@ -101,7 +101,7 @@ void	enemy_init(t_game *game)
 
 	i = -1;
 	y = -1;
-	game->mines = ft_calloc(game->enemy_cnt + 1, sizeof(t_enemy*));
+	game->mines = ft_calloc(game->enemyCnt + 1, sizeof(t_enemy*));
 	if (!game->mines)
 		game_close(3, game);
 	while (++y < game->h)
@@ -124,12 +124,12 @@ void	enemy_init(t_game *game)
 
 void read_map(t_game *game, char *map_name)
 {
-	int		fd;
-	int		ret;
-	int		cnt;
-	char	*line;
-	char	**oldMap = NULL;
-
+	int fd;
+	int ret;
+	int cnt;
+	char *line;
+	char **oldMap = NULL;
+	
 	int i = -1;
 	cnt = 0;
 	ret = 1;

@@ -1,42 +1,63 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   errors_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wadina <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/02 01:59:44 by wadina            #+#    #+#             */
-/*   Updated: 2022/01/02 01:59:50 by wadina           ###   ########.fr       */
+/*   Created: 2022/01/02 02:01:30 by wadina            #+#    #+#             */
+/*   Updated: 2022/01/02 02:01:31 by wadina           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
-void	game_close(int err, t_game *game)
+void game_close(int err, t_game *game)
 {
 	if (err == 6)
 	{
 		ft_putendl_fd("Error\nNeed map name", 2);
 		exit(6);
 	}
+	
 	liberator(game);
 	if (err == 1)
+	{
 		ft_putendl_fd("Error\nOpen error", 2);
-	else if (err == 2)
+		exit(1);
+	}
+	if (err == 2)
+	{
 		ft_putendl_fd("Error\nRead error", 2);
-	else if (err == 3)
+		exit(2);
+	}
+	if (err == 3)
+	{
 		ft_putendl_fd("Error\nMalloc error", 2);
-	else if (err == 4)
+		exit(3);
+	}
+	if (err == 4)
+	{
 		ft_putendl_fd("Error\nValid map error", 2);
-	else if (err == 5)
+		exit(4);
+	}
+	if (err == 5)
+	{
 		ft_putendl_fd("Game interupted of ESC", 2);
-	else if (err == 0)
+		exit(5);
+	}
+	if (err == 7)
+	{
+		ft_putendl_fd("Game over", 2);
+		exit(7);
+	}
+	if (err == 0)
 		ft_putendl_fd("Game done", 2);
-	exit(err);
+	exit(0);
 }
 
-int	button(t_game *game)
+int button(t_game *game)
 {
 	game_close(0, game);
-	return (0);
+	return 0;
 }
