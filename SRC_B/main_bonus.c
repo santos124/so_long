@@ -12,7 +12,7 @@
 
 #include "so_long_bonus.h"
 
-t_game	*init_mem(char **av)
+static t_game	*init_mem(char **av)
 {
 	t_game	*game;
 

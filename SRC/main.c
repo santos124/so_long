@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	init_imgs(t_game *game)
+static void	init_imgs(t_game *game)
 {
 	game->pers->img = mlx_xpm_file_to_image(game->mlx, "imgs/persM.xpm",
 			&game->pers->w, &game->pers->h);
@@ -36,31 +36,12 @@ void	init_imgs(t_game *game)
 		game_close(1, game);
 }
 
-void	init_game(t_game *game)
+static void	init_game(t_game *game)
 {
-	game->mlx = NULL;
-	game->win = NULL;
-	game->space = NULL;
-	game->wall = NULL;
-	game->food = NULL;
-	game->exit = NULL;
-	game->pers = NULL;
-	game->map_name = NULL;
-	game->map = NULL;
-	game->move_cnt = 0;
-	game->food_cnt = 0;
-	game->exit_cnt = 0;
-	game->pers_cnt = 0;
-	game->did_move = 0;
-	game->eat_food = 0;
-	game->p_x = 0;
-	game->p_y = 0;
-	game->h = 0;
-	game->w = 0;
-	game->need_clear = 0;
+	*game = (t_game){0};
 }
 
-t_game	*init_mem(char **av)
+static t_game	*init_mem(char **av)
 {
 	t_game	*game;
 

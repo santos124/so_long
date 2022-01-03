@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	pers_find(t_game *game)
+static void	pers_find(t_game *game)
 {
 	int	x;
 	int	y;
@@ -34,7 +34,7 @@ void	pers_find(t_game *game)
 	}
 }
 
-void	valid_map_continue(t_game *game)
+static void	valid_map_continue(t_game *game)
 {
 	int	x;
 	int	y;
@@ -58,7 +58,7 @@ void	valid_map_continue(t_game *game)
 	}
 }
 
-void	valid_map(t_game *game)
+static void	valid_map(t_game *game)
 {
 	int	x;
 	int	y;
@@ -86,7 +86,7 @@ void	valid_map(t_game *game)
 	valid_map_continue(game);
 }
 
-void	memories(char ***old_map, t_game *game, int *i, char **line)
+static void	memories(char ***old_map, t_game *game, int *i, char **line)
 {
 	game->h++;
 	*old_map = game->map;

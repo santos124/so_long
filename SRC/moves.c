@@ -12,30 +12,7 @@
 
 #include "so_long.h"
 
-int	key(int keycode, t_game *game)
-{
-	game->move_cnt++;
-	game->eat_food = 0;
-	if (keycode == 53)
-		game_close(5, game);
-	else if (keycode == 0)
-		dir_left(game);
-	else if (keycode == 1)
-		dir_down(game);
-	else if (keycode == 2)
-		dir_right(game);
-	else if (keycode == 13)
-		dir_up(game);
-	else
-		return (0);
-	if (game->did_move)
-		printf("MOVES=%d\n", game->move_cnt);
-	if (game->food_cnt == 0 && game->map[game->p_y][game->p_x] == 'E')
-		game_close(0, game);
-	return (0);
-}
-
-void	dir_left(t_game *game)
+static void	dir_left(t_game *game)
 {
 	if (game->p_x > 0)
 	{
@@ -58,7 +35,7 @@ void	dir_left(t_game *game)
 	}
 }
 
-void	dir_right(t_game *game)
+static void	dir_right(t_game *game)
 {
 	if (game->p_x < game->w - 1)
 	{
@@ -81,7 +58,7 @@ void	dir_right(t_game *game)
 	}
 }
 
-void	dir_down(t_game *game)
+static void	dir_down(t_game *game)
 {
 	if (game->p_y < game->h - 1)
 	{
@@ -104,7 +81,7 @@ void	dir_down(t_game *game)
 	}
 }
 
-void	dir_up(t_game *game)
+static void	dir_up(t_game *game)
 {
 	if (game->p_y > 0)
 	{
@@ -125,4 +102,27 @@ void	dir_up(t_game *game)
 			game->move_cnt--;
 		}
 	}
+}
+
+int	key(int keycode, t_game *game)
+{
+	game->move_cnt++;
+	game->eat_food = 0;
+	if (keycode == 53)
+		game_close(5, game);
+	else if (keycode == 0)
+		dir_left(game);
+	else if (keycode == 1)
+		dir_down(game);
+	else if (keycode == 2)
+		dir_right(game);
+	else if (keycode == 13)
+		dir_up(game);
+	else
+		return (0);
+	if (game->did_move)
+		printf("MOVES=%d\n", game->move_cnt);
+	if (game->food_cnt == 0 && game->map[game->p_y][game->p_x] == 'E')
+		game_close(0, game);
+	return (0);
 }

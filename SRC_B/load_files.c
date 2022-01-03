@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_files.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wadina <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/03 18:30:39 by wadina            #+#    #+#             */
+/*   Updated: 2022/01/03 18:30:41 by wadina           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long_bonus.h"
 
-char	**get_names_tank(t_game	*game)
+static char	**get_names_tank(t_game	*game)
 {
 	char	**tanks;
 
@@ -25,7 +37,7 @@ char	**get_names_tank(t_game	*game)
 	return (tanks);
 }
 
-void	get_tank(t_game *game)
+static void	get_tank(t_game *game)
 {
 	int		i;
 	char	**s;
@@ -49,7 +61,7 @@ void	get_tank(t_game *game)
 	free(s);
 }
 
-char	**get_names_fuel(t_game	*game)
+static char	**get_names_fuel(t_game	*game)
 {
 	char	**fuels;
 
@@ -74,7 +86,7 @@ char	**get_names_fuel(t_game	*game)
 	return (fuels);
 }
 
-void	get_fuel(t_game *game)
+static void	get_fuel(t_game *game)
 {
 	int		i;
 	char	**s;

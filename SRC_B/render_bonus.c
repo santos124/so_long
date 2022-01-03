@@ -12,15 +12,16 @@
 
 #include "so_long_bonus.h"
 
-void	food(t_game	*game, int px, int py)
+static void	food(t_game	*game, int px, int py)
 {
-	mlx_put_image_to_window(game->mlx, game->win, game->fuel[game->i / 8]->img, px, py);
+	mlx_put_image_to_window(game->mlx, game->win,
+		game->fuel[game->i / 8]->img, px, py);
 	game->j += 2;
 	if (game->j > 62)
 		game->j = 0;
 }
 
-void	enemy_move(int i, t_game *game)
+static void	enemy_move(int i, t_game *game)
 {
 	if (game->mines[i]->d == 0)
 	{
@@ -44,22 +45,31 @@ void	enemy_move(int i, t_game *game)
 	}
 }
 
-void	enemy(t_game	*game)
+static void	enemy_and_pers(t_game	*game)
 {
 	int	i;
 
 	i = -1;
-	while (++i < game->enemyCnt)
+	while (++i < game->enemy_cnt)
 	{
 		enemy_move(i, game);
 		mlx_put_image_to_window(game->mlx, game->win, game->mine->img,
 			game->mines[i]->x * 100, game->mines[i]->y * 100);
-		if (game->pX == game->mines[i]->x && game->pY == game->mines[i]->y)
+		if (game->p_x == game->mines[i]->x && game->p_y == game->mines[i]->y)
 			game_close(7, game);
 	}
+	if (game->i > 25)
+		mlx_put_image_to_window(game->mlx, game->win,
+			game->tank[0 + game->p_d]->img, game->p_x * 100, game->p_y * 100);
+	else
+		mlx_put_image_to_window(game->mlx, game->win,
+			game->tank[4 + game->p_d]->img, game->p_x * 100, game->p_y * 100);
+	game->i++;
+	if (game->i > 50)
+		game->i = 0;
 }
 
-void	draw_rectange(t_game *game, int x, int y, char block)
+static void	draw_rectange(t_game *game, int x, int y, char block)
 {
 	int	dx;
 	int	dy;
@@ -73,17 +83,6 @@ void	draw_rectange(t_game *game, int x, int y, char block)
 		food(game, dx, dy);
 	else if (block == 'E')
 		mlx_put_image_to_window(game->mlx, game->win, game->exit->img, dx, dy);
-}
-
-void	pers(t_game *game)
-{
-	if (game->i > 25)
-		mlx_put_image_to_window(game->mlx, game->win, game->tank[0 + game->pD]->img, game->pX * 100, game->pY * 100);
-	else
-		mlx_put_image_to_window(game->mlx, game->win, game->tank[4 + game->pD]->img, game->pX * 100, game->pY * 100);
-	game->i++;
-	if (game->i > 50)
-		game->i = 0;
 }
 
 int	render(t_game *game)
@@ -103,9 +102,8 @@ int	render(t_game *game)
 		}
 		y++;
 	}
-	pers(game);
-	enemy(game);
-	str = ft_itoa(game->moveCnt);
+	enemy_and_pers(game);
+	str = ft_itoa(game->move_cnt);
 	if (!str)
 		game_close(2, game);
 	mlx_string_put(game->mlx, game->win, 10, 10, 0xFF0000, "MOVES");

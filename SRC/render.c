@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	draw_rectange(t_game *game, int x, int y)
+static void	draw_rectange(t_game *game, int x, int y)
 {
 	mlx_put_image_to_window(game->mlx, game->win, game->space->img, x * 50,
 		y * 50);

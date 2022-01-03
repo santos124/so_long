@@ -12,14 +12,13 @@
 
 #ifndef SO_LONG_BONUS_H
 # define SO_LONG_BONUS_H
-// # include	<stdio.h>
 # include	<stdlib.h>
 # include	<unistd.h>
 # include	<fcntl.h>
 # include	"../libft/libft.h"
 # include	"../mlx/mlx.h"
 
-typedef struct	s_img {
+typedef struct s_img {
 	void	*img;
 	int		width;
 	int		height;
@@ -31,7 +30,7 @@ typedef struct s_enemy {
 	int		d;
 }				t_enemy;
 
-typedef struct	s_game {
+typedef struct s_game {
 	void	*mlx;
 	void	*win;
 	t_img	*space;
@@ -60,17 +59,9 @@ typedef struct	s_game {
 	int		p_d;
 }				t_game;
 
-t_game	*init_mem(char **av);
 void	init_imgs(t_game *game);
-void	get_fuel(t_game *game);
-char	**get_names_fuel(t_game	*game);
-void	get_tank(t_game *game);
-char	**get_names_tank(t_game	*game);
 void	read_map(t_game *game, char *map_name);
-void	enemy_init(t_game *game);
 void	valid_map(t_game *game);
-void	food_check(t_game	*game);
-void	pers_find(t_game *game);
 int		button(t_game *game);
 void	check_pointer(void *ptr, int err, t_game *game);
 void	game_close(int err, t_game *game);
