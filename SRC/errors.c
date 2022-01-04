@@ -32,11 +32,13 @@ void	game_close(int err, t_game *game)
 		ft_putendl_fd("Game interupted of ESC", 2);
 	else if (err == 0)
 		ft_putendl_fd("Game done", 2);
+	if (err == 8)
+		ft_putendl_fd("Game closed by red crosshair", 2);
 	exit(err);
 }
 
 int	button(t_game *game)
 {
-	game_close(0, game);
+	game_close(8, game);
 	return (0);
 }

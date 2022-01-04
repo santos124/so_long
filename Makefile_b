@@ -5,7 +5,6 @@ LIBFT		=	$(LIBFTDIR)/libft.a
 LIBMLXDIR	=	mlx
 LIBMLX		=	$(LIBMLXDIR)/libmlx.a
 CFLAGS		=	-Wall -Werror -Wextra
-# -g3 -fsanitize=address
 CC			=	clang
 
 SRC_B			=	SRC_B/main_bonus.c SRC_B/moves_bonus.c SRC_B/errors_bonus.c\

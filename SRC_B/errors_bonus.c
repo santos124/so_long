@@ -35,6 +35,8 @@ void	game_close(int err, t_game *game)
 		errorer("Game interupted of ESC", 5);
 	if (err == 7)
 		errorer("Game over", 7);
+	if (err == 8)
+		errorer("Game closed by red crosshair", 8);
 	if (err == 0)
 		errorer("Game done", 0);
 	exit(0);
@@ -48,6 +50,6 @@ void	check_pointer(void *ptr, int err, t_game *game)
 
 int	button(t_game *game)
 {
-	game_close(0, game);
+	game_close(8, game);
 	return (0);
 }
