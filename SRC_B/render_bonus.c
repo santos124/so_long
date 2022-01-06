@@ -91,6 +91,7 @@ int	render(t_game *game)
 	int		x;
 	char	*str;
 
+	mlx_clear_window(game->mlx, game->win);
 	y = 0;
 	while (y < game->h)
 	{
