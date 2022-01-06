@@ -18,6 +18,12 @@ static	void	errorer(const char *s, int err)
 	exit(err);
 }
 
+static void	outer(const char *s)
+{
+	ft_putendl_fd((char *)s, 1);
+	exit(0);
+}
+
 void	game_close(int err, t_game *game)
 {
 	if (err == 6)
@@ -32,13 +38,13 @@ void	game_close(int err, t_game *game)
 	if (err == 4)
 		errorer("Error\nValid map error", 4);
 	if (err == 5)
-		errorer("Game interupted of ESC", 5);
+		outer("Game interupted of ESC");
 	if (err == 7)
-		errorer("Game over", 7);
+		outer("Game over");
 	if (err == 8)
-		errorer("Game closed by red crosshair", 8);
+		outer("Game closed by red crosshair");
 	if (err == 0)
-		errorer("Game done", 0);
+		outer("Game done");
 	exit(0);
 }
 

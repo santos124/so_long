@@ -29,11 +29,11 @@ void	game_close(int err, t_game *game)
 	else if (err == 4)
 		ft_putendl_fd("Error\nValid map error", 2);
 	else if (err == 5)
-		ft_putendl_fd("Game interupted of ESC", 2);
+		ft_putendl_fd("Game interupted of ESC", 1);
 	else if (err == 0)
-		ft_putendl_fd("Game done", 2);
+		ft_putendl_fd("Game done", 1);
 	if (err == 8)
-		ft_putendl_fd("Game closed by red crosshair", 2);
+		ft_putendl_fd("Game closed by red crosshair", 1);
 	exit(err);
 }
 
